@@ -28,7 +28,7 @@ The output is:
 
 
 ## Languages
-Tok-tok has been tested on, and gives reasonably good results for English, Persian, Russian, Czech, French, German, and a few others.
+Tok-tok has been tested on, and gives reasonably good results for English, Persian, Russian, Czech, French, German, Vietnamese, Tajik, and a few others.
 The input should be in UTF-8 encoding.
 You can use the command-line tool `iconv` to convert other formats to UTF-8.
 
