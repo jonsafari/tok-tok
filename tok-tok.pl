@@ -46,7 +46,7 @@ while (<>) {
   ## URL-unfriendly characters: [:/?#]
   s{:(?!//)}{ : }g;
   s{\?(?!\S)}{ ? }g;
-  m{\S+\.\S+/\S+} or s{/}{ / }g; # not exactly right: doesn't tokenize legit slash if on same line as URL
+  m{://} or m{\S+\.\S+/\S+} or s{/}{ / }g; # not exactly right: doesn't tokenize legit slash if on same line as URL
   s{ /}{ / }g;
 
   s/& /&amp; /g;		# replace problematic character with numeric character reference
