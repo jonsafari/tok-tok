@@ -1,12 +1,9 @@
 # Tok-tok
-A fast, simple, multilingual tokenizer
-
-
-## Overview
-
-Tok-tok is a fast, simple, multilingual tokenizer.
+**Tok-tok** is a fast, simple, multilingual tokenizer.
 It is freely licensed under the [Apache v2][] license.
 
+
+## Example
 For example, given an input of:
 
       They thought, "Is 9.5 or 525,600 my favorite number?",  before seeing Dr. Bob's dog talk on www.foo.ninja/index.html?nobeta=1&noalpha=0.
