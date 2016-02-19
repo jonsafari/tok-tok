@@ -4,7 +4,7 @@
 ## Changes this:  They thought, "Is 9.5 or 525,600 my favorite number?"  before seeing Dr. Bob's dog talk.
 ## To this:       They thought , " Is 9.5 or 525,600 my favorite number ? " before seeing Dr. Bob ' s dog talk .
 
-use v5.8.0;
+use v5.10.0;
 use strict;
 use Getopt::Long;
 use utf8;
@@ -12,7 +12,7 @@ binmode(STDIN,  ":utf8");
 binmode(STDOUT, ":utf8");
 
 ## Defaults
-my $lower = undef;
+my ($lower,$no_empty) = undef;
 my $digit = 0;
 
 my $usage     = <<"END_OF_USAGE";
@@ -26,6 +26,7 @@ Options:
  -h, --help        Print this usage
  -d, --digit <u>   Conflate all digits to <u> . Note that 0 is reserved
  -l, --lower       Lowercase text
+     --no-empty    Remove empty lines
 
 END_OF_USAGE
 
@@ -33,12 +34,14 @@ GetOptions(
     'h|help|?'		=> sub { print $usage; exit; },
     'd|digit=i'		=> \$digit,
     'l|lower'		=> \$lower,
+    'no-empty'		=> \$no_empty,
 ) or die $usage;
 
 
 
 while (<>) {
-  m/^#/ && print && next;	# skip comments
+  next if $no_empty && m/^$/;	# skip emtpy lines
+  m/^#/ && print && next;		# skip comments
 
   s/ / /g;					# replace no-break spaces with normal spaces
   s/([،;؛¿!"\])}»›”؟%٪°±©®।॥…])/ $1 /g;
@@ -67,7 +70,7 @@ while (<>) {
   s/(?<!\.)\.$/ ./g;	# don't tokenize period unless it ends the line (and isn't preceded by another period)
   s/(?<!\.)\.\s*(["'’»›”]) *$/ . $1/g;	# don't tokenize period unless it's near the end of the line: eg. " ... stuff."
   s/\s+$/\n/g;			# rm trailing spaces
-  s/^\s+//g;			# rm leading  spaces
+  s/^\h+//g;			# rm leading  spaces
   s/ {2,}/ /g;			# merge duplicate spaces
 
   $digit and s/\d/$digit/g;
