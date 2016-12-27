@@ -44,7 +44,7 @@ while (<>) {
   m/^#/ && print && next;		# skip comments
 
   s/ / /g;					# replace no-break spaces with normal spaces
-  s/([،;؛¿!"\])}»›”؟%٪°±©®।॥…])/ $1 /g;
+  s/([،;؛¿!"\])}»›”؟¡%٪°±©®।॥…])/ $1 /g;
 
   ## URL-unfriendly characters: [:/?#]
   s{:(?!//)}{ : }g;
