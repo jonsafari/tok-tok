@@ -12,7 +12,7 @@ binmode(STDIN,  ":utf8");
 binmode(STDOUT, ":utf8");
 
 ## Defaults
-my ($lower,$no_empty) = undef;
+my ($lower,$no_empty,$skip_comments) = undef;
 my $digit = 0;
 
 my $usage     = <<"END_OF_USAGE";
@@ -23,10 +23,11 @@ Usage:    perl $0 [options] < text.txt > text.tok.txt
 Function: A fast, simple, multilingual tokenizer
 
 Options:
- -h, --help        Print this usage
- -d, --digit <u>   Conflate all digits to <u> . Note that 0 is reserved
- -l, --lower       Lowercase text
-     --no-empty    Remove empty lines
+ -h, --help           Print this usage
+ -d, --digit <u>      Conflate all digits to <u> . Note that 0 is reserved
+ -l, --lower          Lowercase text
+     --no-empty       Remove empty lines
+     --skip-comments  Don't tokenize lines starting with '#'
 
 END_OF_USAGE
 
@@ -35,13 +36,17 @@ GetOptions(
     'd|digit=i'		=> \$digit,
     'l|lower'		=> \$lower,
     'no-empty'		=> \$no_empty,
+    'skip-comments'	=> \$skip_comments,
 ) or die $usage;
 
 
 
 while (<>) {
-  next if $no_empty && m/^$/;	# skip emtpy lines
-  m/^#/ && print && next;		# skip comments
+  next if $no_empty && m/^$/;		# skip emtpy lines
+  if ($skip_comments && m/^#/) {	# skip comments
+	  print;
+	  next;
+  }
 
   s/ / /g;					# replace no-break spaces with normal spaces
   s/([،;؛¿!"\])}»›”؟¡%٪°±©®।॥…])/ $1 /g;
