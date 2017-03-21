@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # By Jon Dehdari, 2017
-# TODO: +lc
+# TODO: +digit-conflate, --no-empty, --skip-comments
 """ Command-line interface to all of NLTK's tokenizers. """
 
 from __future__ import print_function
@@ -40,17 +40,24 @@ def load_tokenizer(cmd_args):
 def tok_stdin(cmd_args, tokr):
     """ Tokenizes each line, and prints it out. """
     for line in sys.stdin:
-        print(' '.join(tokr.tokenize(line)))
+        line = ' '.join(tokr.tokenize(line))
+        if cmd_args.lc:
+            print(line.lower)
+        else:
+            print(line)
 
 def main():
+    """ Parse command-line arguments and tokenize STDIN. """
+
     parser = argparse.ArgumentParser(
-        description='Easy massively multilingual language identification')
+        description="Command-line interface to all of NLTK's tokenizers.")
     parser.add_argument('-l', '--lang', type=str, default='en',
                         help='Specify language code for moses tokenizer (default: %(default)s)')
-    parser.add_argument('--lc', action='store_true',
+    parser.add_argument('--lc', '--lower', action='store_true',
                         help='Lowercase text')
     parser.add_argument('-t', '--tok', type=str, default='toktok',
-                        help='Specify tokenizer submodule {casual,moses,stanford,toktok,treebank} (default: %(default)s)')
+                        help='Specify tokenizer submodule {casual, moses,\
+                                stanford, toktok, treebank} (default: %(default)s)')
     cmd_args = parser.parse_args()
 
     # Load tokenizer
