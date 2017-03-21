@@ -1,6 +1,5 @@
 # Tok-tok
-**Tok-tok** is a fast, simple, multilingual tokenizer.
-It is freely licensed under the [Apache v2][] license.
+**Tok-tok** is a fast, simple, multilingual tokenizer.  Python and Perl implementations are provided.
 
 
 ## Example
