@@ -40,9 +40,19 @@ def load_tokenizer(cmd_args):
 def tok_stdin(cmd_args, tokr):
     """ Tokenizes each line, and prints it out. """
     for line in sys.stdin:
+        # Skip empty lines
+        if cmd_args.no_empty and line == '\n':
+            continue
+
+        # Don't tokenize comments
+        if cmd_args.skip_comments and line[0] == '#':
+            print(line, end='')
+            continue
+
         line = ' '.join(tokr.tokenize(line))
+
         if cmd_args.lc:
-            print(line.lower)
+            print(line.lower())
         else:
             print(line)
 
@@ -55,6 +65,10 @@ def main():
                         help='Specify language code for moses tokenizer (default: %(default)s)')
     parser.add_argument('--lc', '--lower', action='store_true',
                         help='Lowercase text')
+    parser.add_argument('--no_empty', action='store_true',
+                        help='Remove empty lines')
+    parser.add_argument('--skip_comments', action='store_true',
+                        help="Don't tokenize lines starting with '#'")
     parser.add_argument('-t', '--tok', type=str, default='toktok',
                         help='Specify tokenizer submodule {casual, moses,\
                                 stanford, toktok, treebank} (default: %(default)s)')
