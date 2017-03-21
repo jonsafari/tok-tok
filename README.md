@@ -13,15 +13,31 @@ The output is:
 
 
 ## Usage
+### Python
+```Bash
+python3 toktok.py [options] < text.txt > text.tok.txt
 
-      perl tok-tok.pl [options] < text.txt > text.tok.txt
+optional arguments:
+  -h, --help               show this help message and exit
+  -d DIGIT, --digit DIGIT  Conflate all digits. For example "3.14" -> "5.55"
+  -l LANG, --lang LANG     Specify language code for moses tokenizer (default: en)
+  --lc, --lower            Lowercase text
+  --no_empty               Remove empty lines
+  --skip_comments          Don't tokenize lines starting with '#'
+  -t TOK, --tok TOK        Specify tokenizer submodule {casual, moses, stanford, toktok, treebank} (default: toktok)
+```
 
-      Options:
-       -h, --help        Print this usage
-       -d, --digit <u>   Conflate all digits to <u> . Note that 0 is reserved
-       -l, --lower       Lowercase text
+### Perl
+```Bash
+perl tok-tok.pl [options] < text.txt > text.tok.txt
 
-
+Options:
+ -h, --help           Print this usage
+ -d, --digit <u>      Conflate all digits to <u> . Note that 0 is reserved
+ -l, --lower          Lowercase text
+     --no-empty       Remove empty lines
+     --skip-comments  Don't tokenize lines starting with '#'
+```
 
 ## Languages
 Tok-tok has been tested on, and gives reasonably good results for English, Persian, Russian, Czech, French, German, Vietnamese, Tajik, and a few others.
