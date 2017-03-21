@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # By Jon Dehdari, 2017
-# TODO: +digit-conflate, --no-empty, --skip-comments
 """ Command-line interface to all of NLTK's tokenizers. """
 
 from __future__ import print_function
 import sys
 import argparse
+import re
 import nltk.tokenize as tok
 
 
@@ -33,6 +33,7 @@ def load_tokenizer(cmd_args):
     elif cmd_args.tok == 'moses':
         tokr = tok.moses.MosesTokenizer(lang=cmd_args.lang)
     else:
+        # Thanks to Liling Tan for implementing Tok-tok's regexes into NLTK!
         tokr = tok.toktok.ToktokTokenizer()
 
     return tokr
@@ -51,16 +52,22 @@ def tok_stdin(cmd_args, tokr):
 
         line = ' '.join(tokr.tokenize(line))
 
+        if cmd_args.digit is not None:
+            line = re.sub('\d', cmd_args.digit, line)
+        print("digit=", cmd_args.digit)
+
         if cmd_args.lc:
-            print(line.lower())
-        else:
-            print(line)
+            line = line.lower()
+
+        print(line)
 
 def main():
     """ Parse command-line arguments and tokenize STDIN. """
 
     parser = argparse.ArgumentParser(
         description="Command-line interface to all of NLTK's tokenizers.")
+    parser.add_argument('-d', '--digit', type=str,
+                        help='Conflate all digits.  For example "3.14" -> "5.55"')
     parser.add_argument('-l', '--lang', type=str, default='en',
                         help='Specify language code for moses tokenizer (default: %(default)s)')
     parser.add_argument('--lc', '--lower', action='store_true',
