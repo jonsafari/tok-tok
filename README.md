@@ -14,7 +14,7 @@ The output is:
 
 ## Usage
 ### Python
-```Bash
+```
 python3 toktok.py [options] < text.txt > text.tok.txt
 
 optional arguments:
@@ -28,7 +28,7 @@ optional arguments:
 ```
 
 ### Perl
-```Bash
+```
 perl tok-tok.pl [options] < text.txt > text.tok.txt
 
 Options:
