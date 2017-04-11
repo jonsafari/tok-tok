@@ -54,7 +54,7 @@ def tok_stdin(cmd_args, tokr):
 
         if cmd_args.digit is not None:
             line = re.sub('\d', cmd_args.digit, line)
-        print("digit=", cmd_args.digit)
+        # print("digit=", cmd_args.digit)
 
         if cmd_args.lc:
             line = line.lower()
