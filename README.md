@@ -26,6 +26,7 @@ optional arguments:
   --skip_comments          Don't tokenize lines starting with '#'
   -t TOK, --tok TOK        Specify tokenizer submodule {casual, moses, stanford, toktok, treebank} (default: toktok)
 ```
+A big thanks to [Liling Tan](https://github.com/alvations) for porting the regexes to Python.
 
 ### Perl
 ```
